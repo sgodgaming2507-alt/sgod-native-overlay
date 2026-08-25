@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGOD Overlay</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+            user-select: none;
+        }
+
+        body {
+            background: transparent;
+            padding: 10px;
+        }
+
+        .panel {
+            background: rgba(18, 22, 36, 0.95);
+            border: 2px solid #ff4655;
+            border-radius: 12px;
+            color: #ffffff;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+            overflow: hidden;
+        }
+
+        .header {
+            background: #ff4655;
+            padding: 8px 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+        }
+
+        .content {
+            padding: 15px;
+        }
+
+        .display-box {
+            background: #0f111a;
+            border: 1px solid #2b3353;
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        .period {
+            font-size: 14px;
+            color: #00e5ff;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+        .result {
+            font-size: 22px;
+            font-weight: 900;
+            color: #ffeb3b;
+            letter-spacing: 1px;
+        }
+
+        .btn-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .btn-mode {
+            background: #1e2640;
+            border: 1px solid #3d4d7a;
+            color: #fff;
+            padding: 8px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .btn-mode:active {
+            background: #ff4655;
+        }
+
+        .btn-action {
+            width: 100%;
+            background: #ff4655;
+            border: none;
+            color: white;
+            padding: 12px;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .status {
+            font-size: 10px;
+            text-align: center;
+            color: #4caf50;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="panel">
+        <div class="header">
+            <span>SGOD OVERLAY</span>
+            <span style="font-size: 10px;">V1.0</span>
+        </div>
+        <div class="content">
+            <div class="display-box">
+                <div class="period" id="period-display">PERIOD: 20260826001</div>
+                <div class="result" id="predict-result">READY</div>
+            </div>
+            <div class="btn-grid">
+                <button class="btn-mode" onclick="setMode('1M')">1 MIN</button>
+                <button class="btn-mode" onclick="setMode('3M')">3 MIN</button>
+            </div>
+            <button class="btn-action" onclick="predict()">PREDICT NEXT</button>
+            <div class="status" id="status-text">ENGINE ACTIVE</div>
+        </div>
+    </div>
+
+    <script>
+        let counter = 1;
+        let mode = "1M";
+
+        function setMode(m) {
+            mode = m;
+            document.getElementById('status-text').innerText = "MODE: " + m;
+        }
+
+        function predict() {
+            const arr = ["BIG", "SMALL", "RED", "GREEN"];
+            const colors = { "BIG": "#ff9800", "SMALL": "#00e5ff", "RED": "#f44336", "GREEN": "#4caf50" };
+            const res = arr[Math.floor(Math.random() * arr.length)];
+            
+            counter++;
+            document.getElementById('period-display').innerText = "PERIOD: 20260826" + String(counter).padStart(3, '0');
+            const resultEl = document.getElementById('predict-result');
+            resultEl.innerText = res;
+            resultEl.style.color = colors[res];
+        }
+    </script>
+</body>
+</html>
